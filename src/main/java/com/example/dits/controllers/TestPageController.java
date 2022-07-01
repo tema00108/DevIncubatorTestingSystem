@@ -94,7 +94,7 @@ public class TestPageController {
         checkIfResultPage(questions, questionNumber, isCorrect, user, statisticList);
         statisticService.saveListOfStatisticsToDB(statisticList);
         model.addAttribute("title","Result");
-        return "redirect:/user/chooseTest";
+        return "user/resultPage";
     }
 
     private void checkIfResultPage(List<QuestionDTO> questions, int questionNumber, boolean isCorrect, UserInfoDTO user, List<StatisticDTO> statisticList) {
@@ -110,6 +110,4 @@ public class TestPageController {
     private boolean isResultPage(int questionNumber, List<StatisticDTO> statisticList) {
         return statisticList.size() >= questionNumber;
     }
-
-
 }
