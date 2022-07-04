@@ -2,7 +2,7 @@
 
 <main>
     <div class="container">
-        <div th:if="${session.statistics == null}">
+        <div th:if="${statistics == null}">
             <div class="title align-items-baseline">
                 <h1 class="start" th:text="${session.user.getFirstName()} + ' ' + ${session.user.getLastName()}"></h1>
             </div>
@@ -15,7 +15,7 @@
                 </form>
             </div>
         </div>
-        <div th:if="${session.statistics != null}">
+        <div th:if="${statistics != null}">
             <section class="result col-12">
                 <div class="result__container container">
                     <div class="row justify-content-center result__head">
@@ -51,6 +51,5 @@
 <div th:replace="/fragments/footer"></div>
 <div th:replace="/fragments/modals"></div>
 
-<script th:src="@{/js/test-item.js}"></script>
 </body>
 </html>
