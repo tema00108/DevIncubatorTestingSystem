@@ -219,7 +219,9 @@ public class StatisticServiceImpl implements StatisticService {
         int avgProc = 0;
 
         for (Statistic statistic : statisticList) {
-            rightAnswers += statistic.isCorrect() ? 1 : 0;
+            if (statistic.isCorrect()) {
+                rightAnswers++;
+            }
         }
 
         avgProc = (int) Math.round((double) rightAnswers / statisticList.size() * 100);
