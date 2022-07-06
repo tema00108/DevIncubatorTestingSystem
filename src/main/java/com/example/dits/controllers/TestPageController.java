@@ -84,7 +84,6 @@ public class TestPageController {
                                 ModelMap model,
                                 HttpSession session){
 
-
         List<QuestionDTO> questions = (List<QuestionDTO>) session.getAttribute("questions");
         int questionNumber = questions.size();
         boolean isCorrect = answerService.isRightAnswer(answeredQuestion,questions,questionNumber);
@@ -92,6 +91,7 @@ public class TestPageController {
         List<StatisticDTO> statisticList = (List<StatisticDTO>) session.getAttribute("statistics");
 
         checkIfResultPage(questions, questionNumber, isCorrect, user, statisticList);
+        setResultAttributes(session, statisticList);
         statisticService.saveListOfStatisticsToDB(statisticList);
         model.addAttribute("title","Result");
         return "user/resultPage";
@@ -109,5 +109,13 @@ public class TestPageController {
 
     private boolean isResultPage(int questionNumber, List<StatisticDTO> statisticList) {
         return statisticList.size() >= questionNumber;
+    }
+
+    private void setResultAttributes(HttpSession session, List<StatisticDTO> statisticList) {
+        long quantityOfRightAnswers = statisticList.stream().filter(StatisticDTO::isCorrect).count();
+        int resultPercentage = (int) Math.round((double) quantityOfRightAnswers / statisticList.size() * 100);
+
+        session.setAttribute("quantityOfRightAnswers", quantityOfRightAnswers);
+        session.setAttribute("resultPercentage", resultPercentage);
     }
 }

@@ -21,8 +21,8 @@
                     <div class="row justify-content-center result__head">
                         <div class=" col result__title"><h3>Your personal statistics</h3></div>
                     </div>
-                    <div class="row result__body">
-                        <div class="data-container container mt-5" id="dataContainer">
+                    <div class="row p-3">
+                        <div class="data-container active container mt-5 w-95" id="dataContainer">
                             <div class="row grid__head">
                                 <div class="col-1 text-start d-none d-md-block">#</div>
                                 <div class="col-md-8 col-sm-7 text-start mb-2 grid__head-item">Name of the test</div>
@@ -30,15 +30,22 @@
                                     <div class="text-center grid__head-item">Pass</div>
                                     <div class="text-center grid__head-item">
                                         <span>Average</span>
-                                        <button class="sort-button" id="sortTestsButton"><img th:src="@{/img/sort-icon.svg}"
-                                                                                              alt="sort-icon"
-                                                                                              src="/img/sort-icon.svg">
+                                        <button type="submit" class="sort-button" id="sortTestsButton"><img th:src="@{/img/sort-icon.svg}"
+                                                                                                            alt="sort-icon"
+                                                                                                            src="/img/sort-icon.svg">
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row grid__item" id="resultTableBody">
-                                <!-- Fetch data layout -->
+                            <div  id="resultTableBody">
+                                <div class="row grid__item test"  th:each="stat,counter : ${statistics}">
+                                    <div class="col-1 text-start d-none d-md-block" th:text="${counter.count}">#</div>
+                                    <div class="col-md-8 col-sm-7 text-start mb-2" th:text="${stat.getTestName()}">Name of the test</div>
+                                    <div class="col-md-3 col-sm-5 text-center d-flex justify-content-between">
+                                        <div th:text="${stat.getCount()}">Pass</div>
+                                        <div th:text="${stat.getAvgProc()}">Proc</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -50,6 +57,8 @@
 
 <div th:replace="/fragments/footer"></div>
 <div th:replace="/fragments/modals"></div>
+
+<script th:src="@{/js/user-statistic-user.js}"></script>
 
 </body>
 </html>
