@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -27,6 +28,7 @@ public class UserStatisticsController {
         UserInfoDTO userDTO = (UserInfoDTO) session.getAttribute("user");
         User user = userService.getUserByLogin(userDTO.getLogin());
         List<TestStatisticByUser> testStatisticByUser = statisticService.getListOfUserTestStatisticsByUser(user);
+        testStatisticByUser.sort(Comparator.comparingInt(TestStatisticByUser::getAvgProc).reversed());
 
         model.addAttribute("statistics", testStatisticByUser);
         return "user/personalStatistics";

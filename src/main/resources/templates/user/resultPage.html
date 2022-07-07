@@ -14,7 +14,7 @@
             </div>
             <div class="row result__body">
                 <div class="result">
-                    <h2 th:text="${session.quantityOfRightAnswers / session.questionSize} + '%'">Result%</h2>
+                    <h2 th:text="${session.resultPercentage} + '%'">Result%</h2>
                     <h2 th:text="'(' + ${session.quantityOfRightAnswers} + '/' + ${session.questionSize} + ')'">Result</h2>
                 </div>
                 <div class="result">
@@ -31,7 +31,7 @@
         </div>
         <div class="row">
             <form th:action="@{/user/statistics}" method="get">
-                <button class="btn btn-lg w-75 mt-5 align-items-center" type="submit">Show all my statistics</button>
+                <button class="btn submit-button w-75 mt-5 mx-auto" style="margin-left: auto; margin-right: auto" type="submit">Show all my statistics</button>
             </form>
         </div>
     </div>
