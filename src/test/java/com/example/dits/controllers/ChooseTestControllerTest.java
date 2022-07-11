@@ -41,6 +41,9 @@ public class ChooseTestControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/user/chooseTest").contentType(MediaType.TEXT_HTML))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+
+        verify(topicService, times(1)).getTopicsWithQuestions();
+        verifyNoMoreInteractions(topicService);
     }
 
     @Test
@@ -61,6 +64,6 @@ public class ChooseTestControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/chooseTheme").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        verifyNoMoreInteractions(testService);
+        verifyNoInteractions(testService);
     }
 }

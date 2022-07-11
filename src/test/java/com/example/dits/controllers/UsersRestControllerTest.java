@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class RestControllerTestForUser {
+public class UsersRestControllerTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -42,6 +42,9 @@ public class RestControllerTestForUser {
     void shouldReturn200WhenWeGetUsers() throws Exception {
         mockMvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+        verify(userService, times(1)).getAllUsers();
+        verifyNoMoreInteractions(userService);
     }
 
     @Test
@@ -59,6 +62,15 @@ public class RestControllerTestForUser {
         verify(userService, times(1)).getUserInfoById(1);
         UserInfoDTO resultUser = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserInfoDTO.class);
         Assertions.assertEquals(resultUser, userInfoDTO);
+    }
+
+    @Test
+    void shouldMapsToBusinessModelWhenNotValidInput() throws Exception {
+        when(userService.getUserInfoById(anyInt())).thenReturn(null);
+
+        mockMvc.perform(get("/users/{id}", anyInt()).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
     }
 
     @Test
