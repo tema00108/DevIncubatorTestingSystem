@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,11 +49,11 @@ public class UsersRestControllerTest {
 
     @Test
     void shouldMapsToBusinessModelWhenValidInput() throws Exception {
-        UserInfoDTO userInfoDTO = new UserInfoDTO();
-        userInfoDTO.setUserId(1);
-        userInfoDTO.setFirstName("Test");
+        UserInfoDTO expected = new UserInfoDTO();
+        expected.setUserId(1);
+        expected.setFirstName("Test");
 
-        when(userService.getUserInfoById(1)).thenReturn(userInfoDTO);
+        when(userService.getUserInfoById(1)).thenReturn(expected);
 
         MvcResult mvcResult = mockMvc.perform(get("/users/{id}", 1).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -62,16 +61,15 @@ public class UsersRestControllerTest {
 
         verify(userService, times(1)).getUserInfoById(1);
         UserInfoDTO resultUser = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserInfoDTO.class);
-        Assertions.assertEquals(resultUser, userInfoDTO);
+        Assertions.assertEquals(resultUser, expected);
     }
 
     @Test
     void shouldMapsToBusinessModelWhenNotValidInput() throws Exception {
-        when(userService.getUserInfoById(anyInt())).thenReturn(null);
+        when(userService.getUserInfoById(anyInt())).thenReturn(new UserInfoDTO());
 
         mockMvc.perform(get("/users/{id}", anyInt()).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().isOk());
     }
 
     @Test
