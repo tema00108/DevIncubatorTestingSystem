@@ -28,7 +28,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public UserInfoDTO getUserInfoById(Integer id) {
-        return modelMapper.map(repository.getUserByUserId(id), UserInfoDTO.class);
+        User user = repository.getUserByUserId(id);
+
+        if (user != null) {
+            return modelMapper.map(user, UserInfoDTO.class);
+        }
+
+        return new UserInfoDTO();
     }
 
     @Override
