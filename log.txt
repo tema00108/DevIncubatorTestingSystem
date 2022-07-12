@@ -1,0 +1,9 @@
+
+Tue Jul 12 14:00:56 MSK 2022
+UserInfoDTO(userId=2, firstName=Matsvei, lastName=Alsheuski, login=admin, role=ROLE_ADMIN)
+
+Tue Jul 12 14:01:02 MSK 2022
+UserInfoDTO(userId=1, firstName=Till, lastName=Linderman, login=user, role=ROLE_USER)
+
+Tue Jul 12 14:01:44 MSK 2022
+UserInfoDTO(userId=2, firstName=Matsvei, lastName=Alsheuski, login=admin, role=ROLE_ADMIN)
