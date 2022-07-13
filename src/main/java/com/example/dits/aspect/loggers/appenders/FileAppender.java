@@ -1,12 +1,9 @@
 package com.example.dits.aspect.loggers.appenders;
 
-import org.springframework.stereotype.Component;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FileAppender {
