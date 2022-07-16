@@ -11,7 +11,7 @@ import java.util.Date;
 public class TestPassingLogger {
     private static final String START_TEST_MESSAGE = "Test started";
     private static final String END_TEST_MESSAGE = "Test ended";
-    private static final FileAppender fileAppender = new FileAppender("userTesting.log", "%25s : %10s %10s %40s", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+    private static final FileAppender fileAppender = new FileAppender("src/main/resources/userTesting.log", "%25s : %10s %10s %40s", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
 
     public void info(Date date, UserInfoDTO user, String testName, String question, String message) {
         fileAppender.write(date, message, user.getLogin(), testName, question);
