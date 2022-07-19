@@ -38,19 +38,10 @@ public class TestStatisticByUserMapper {
 
     private Map<String, List<Statistic>> getMapWithStatisticsByTestName(List<Statistic> statistics) {
         Map<String, List<Statistic>> map = new HashMap<>();
-
-        for (Statistic statistic : statistics) {
-            Test test = statistic.getQuestion().getTest();
-            List<Statistic> list = map.get(test.getName());
-
-            if (list != null) {
-                list.add(statistic);
-            } else {
-                List<Statistic> statisticList = new ArrayList<>();
-                statisticList.add(statistic);
-                map.put(test.getName(), statisticList);
-            }
-        }
+        statistics.forEach(stat -> {
+            Test test = stat.getQuestion().getTest();
+            map.computeIfAbsent(test.getName(), k -> new ArrayList<>()).add(stat);
+        });
 
         return map;
     }
