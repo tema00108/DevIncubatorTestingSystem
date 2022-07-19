@@ -3,6 +3,8 @@ package com.example.dits.mapper;
 import com.example.dits.dto.TestStatisticByUser;
 import com.example.dits.entity.Statistic;
 import com.example.dits.entity.Test;
+import com.example.dits.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,14 +14,21 @@ import java.util.Map;
 
 @Component
 public class TestStatisticByUserMapper {
-    public List<TestStatisticByUser> map(List<Statistic> statistics) {
+    private final QuestionService questionService;
+
+    @Autowired
+    public TestStatisticByUserMapper(QuestionService questionService) {
+        this.questionService = questionService;
+    }
+
+    public List<TestStatisticByUser> map(List<Statistic> statisticsOfUser) {
         List<TestStatisticByUser> testStatisticsByUser = new ArrayList<>();
-        Map<String, List<Statistic>> map = getMapWithStatisticsByTestName(statistics);
+        Map<String, List<Statistic>> map = getMapWithStatisticsByTestName(statisticsOfUser);
 
         map.forEach((testName, statisticList) -> {
             testStatisticsByUser.add(TestStatisticByUser.builder()
                     .testName(testName)
-                    .count(statisticList.size())
+                    .count(statisticList.size() / questionService.getQuestionsByTestName(testName).size())
                     .avgProc(getAvgProcOfRightAnswers(statisticList))
                     .build());
         });
